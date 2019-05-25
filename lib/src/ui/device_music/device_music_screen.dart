@@ -4,11 +4,31 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:music_app/src/blocs/global.dart';
 import 'package:music_app/src/models/playerstate.dart';
+import 'package:music_app/src/ui/device_music/bottom_panel.dart';
 import 'package:music_app/src/ui/device_music/song_tile.dart';
 import 'package:provider/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
-class DeviceMusicScreen extends StatelessWidget {
+class DeviceMusicScreen extends StatefulWidget {
+  @override
+  _DeviceMusicScreenState createState() => _DeviceMusicScreenState();
+}
+
+class _DeviceMusicScreenState extends State<DeviceMusicScreen> {
+  PanelController _controller;
+
+  @override
+  void initState() {
+    _controller = PanelController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _controller.close();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final GlobalBloc _globalBloc = Provider.of<GlobalBloc>(context);
@@ -46,6 +66,8 @@ class DeviceMusicScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
       ),
       body: SlidingUpPanel(
+        controller: _controller,
+        minHeight: 110,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(20.0),
           topRight: Radius.circular(20.0),
@@ -71,6 +93,7 @@ class DeviceMusicScreen extends StatelessWidget {
               ],
             ),
           ),
+          child: BottomPanel(controller: _controller),
         ),
         body: StreamBuilder<List<Song>>(
           stream: _globalBloc.musicPlayerBloc.songs$,
