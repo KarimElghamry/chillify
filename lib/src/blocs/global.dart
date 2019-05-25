@@ -1,12 +1,14 @@
 import 'package:music_app/src/blocs/music_player.dart';
 
 class GlobalBloc {
-  MusicPlayerBloc musicPlayerBloc;
+  MusicPlayerBloc _musicPlayerBloc;
+  MusicPlayerBloc get musicPlayerBloc => _musicPlayerBloc;
+
   GlobalBloc() {
-    musicPlayerBloc = MusicPlayerBloc();
+    _musicPlayerBloc = MusicPlayerBloc();
   }
 
   void dispose() {
-    musicPlayerBloc.dispose();
+    _musicPlayerBloc.dispose();
   }
 }
