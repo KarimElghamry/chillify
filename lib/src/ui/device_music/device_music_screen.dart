@@ -1,8 +1,10 @@
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:music_app/src/blocs/global.dart';
 import 'package:music_app/src/models/playerstate.dart';
+import 'package:music_app/src/ui/device_music/song_tile.dart';
 import 'package:provider/provider.dart';
 
 class DeviceMusicScreen extends StatelessWidget {
@@ -55,68 +57,55 @@ class DeviceMusicScreen extends StatelessWidget {
           return ListView.builder(
             itemCount: _songs.length,
             itemBuilder: (BuildContext context, int index) {
-              final String _title = _songs[index].title;
-              final String _uri = _songs[index].uri;
               return StreamBuilder<MapEntry<PlayerState, Song>>(
-                  stream: _globalBloc.musicPlayerBloc.playerState$,
-                  builder: (BuildContext context,
-                      AsyncSnapshot<MapEntry<PlayerState, Song>> snapshot) {
-                    if (!snapshot.hasData) {
-                      return Container();
-                    }
-                    final PlayerState _state = snapshot.data.key;
-                    final Song _currentSong = snapshot.data.value;
-                    final bool _isSelectedSong = _currentSong == _songs[index];
-                    return ListTile(
-                      onTap: () {
-                        _globalBloc.musicPlayerBloc.updatePlaylist(_songs);
-                        switch (_state) {
-                          case PlayerState.playing:
-                            if (_isSelectedSong) {
-                              _globalBloc.musicPlayerBloc
-                                  .pauseMusic(_currentSong);
-                            } else {
-                              _globalBloc.musicPlayerBloc.stopMusic();
-                              _globalBloc.musicPlayerBloc.playMusic(
-                                _songs[index],
-                              );
-                            }
-                            break;
-                          case PlayerState.paused:
-                            if (_isSelectedSong) {
-                              _globalBloc.musicPlayerBloc
-                                  .playMusic(_songs[index]);
-                            } else {
-                              _globalBloc.musicPlayerBloc.stopMusic();
-                              _globalBloc.musicPlayerBloc.playMusic(
-                                _songs[index],
-                              );
-                            }
-                            break;
-                          case PlayerState.stopped:
+                stream: _globalBloc.musicPlayerBloc.playerState$,
+                builder: (BuildContext context,
+                    AsyncSnapshot<MapEntry<PlayerState, Song>> snapshot) {
+                  if (!snapshot.hasData) {
+                    return Container();
+                  }
+                  final PlayerState _state = snapshot.data.key;
+                  final Song _currentSong = snapshot.data.value;
+                  final bool _isSelectedSong = _currentSong == _songs[index];
+                  return GestureDetector(
+                    onTap: () {
+                      _globalBloc.musicPlayerBloc.updatePlaylist(_songs);
+                      switch (_state) {
+                        case PlayerState.playing:
+                          if (_isSelectedSong) {
+                            _globalBloc.musicPlayerBloc
+                                .pauseMusic(_currentSong);
+                          } else {
+                            _globalBloc.musicPlayerBloc.stopMusic();
+                            _globalBloc.musicPlayerBloc.playMusic(
+                              _songs[index],
+                            );
+                          }
+                          break;
+                        case PlayerState.paused:
+                          if (_isSelectedSong) {
                             _globalBloc.musicPlayerBloc
                                 .playMusic(_songs[index]);
-                            break;
-                          default:
-                            break;
-                        }
-                      },
-                      leading: _isSelectedSong && _state == PlayerState.playing
-                          ? Icon(
-                              Icons.pause_circle_outline,
-                              size: 40,
-                            )
-                          : Icon(
-                              Icons.play_circle_outline,
-                              size: 40,
-                            ),
-                      title: Text(
-                        _title,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    );
-                  });
+                          } else {
+                            _globalBloc.musicPlayerBloc.stopMusic();
+                            _globalBloc.musicPlayerBloc.playMusic(
+                              _songs[index],
+                            );
+                          }
+                          break;
+                        case PlayerState.stopped:
+                          _globalBloc.musicPlayerBloc.playMusic(_songs[index]);
+                          break;
+                        default:
+                          break;
+                      }
+                    },
+                    child: SongTile(
+                      song: _songs[index],
+                    ),
+                  );
+                },
+              );
             },
           );
         },
