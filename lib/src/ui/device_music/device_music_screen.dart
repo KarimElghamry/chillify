@@ -83,11 +83,17 @@ class DeviceMusicScreen extends StatelessWidget {
                       leading: _isSelectedSong && _state == PlayerState.playing
                           ? Icon(
                               Icons.pause_circle_outline,
+                              size: 40,
                             )
                           : Icon(
                               Icons.play_circle_outline,
+                              size: 40,
                             ),
-                      title: Text(_title),
+                      title: Text(
+                        _title,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     );
                   });
             },

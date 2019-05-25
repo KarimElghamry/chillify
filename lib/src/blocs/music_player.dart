@@ -34,18 +34,18 @@ class MusicPlayerBloc {
     );
   }
 
-  void playMusic(Song song) {
-    _audioPlayer.play(song.uri);
+  Future<void> playMusic(Song song) async {
+    await _audioPlayer.play(song.uri);
     updatePlayerState(PlayerState.playing, song);
   }
 
-  void pauseMusic(Song song) {
-    _audioPlayer.pause();
+  Future<void> pauseMusic(Song song) async {
+    await _audioPlayer.pause();
     updatePlayerState(PlayerState.paused, song);
   }
 
-  void stopMusic() {
-    _audioPlayer.stop();
+  Future<void> stopMusic() async {
+    await _audioPlayer.stop();
     updatePlayerState(PlayerState.stopped, null);
   }
 
