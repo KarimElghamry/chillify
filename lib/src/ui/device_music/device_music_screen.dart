@@ -6,6 +6,7 @@ import 'package:music_app/src/blocs/global.dart';
 import 'package:music_app/src/models/playerstate.dart';
 import 'package:music_app/src/ui/device_music/song_tile.dart';
 import 'package:provider/provider.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class DeviceMusicScreen extends StatelessWidget {
   @override
@@ -44,71 +45,101 @@ class DeviceMusicScreen extends StatelessWidget {
         elevation: 0.0,
         backgroundColor: Colors.transparent,
       ),
-      body: StreamBuilder<List<Song>>(
-        stream: _globalBloc.musicPlayerBloc.songs$,
-        builder: (BuildContext context, AsyncSnapshot<List<Song>> snapshot) {
-          if (!snapshot.hasData) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          final List<Song> _songs = snapshot.data;
+      body: SlidingUpPanel(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20.0),
+          topRight: Radius.circular(20.0),
+        ),
+        collapsed: Container(
+          width: double.infinity,
+          height: double.infinity,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20.0),
+              topRight: Radius.circular(20.0),
+            ),
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              stops: [
+                0.0,
+                0.8,
+              ],
+              colors: [
+                Color(0xFF4D90CD),
+                Color(0xFFDF5F9D),
+              ],
+            ),
+          ),
+        ),
+        body: StreamBuilder<List<Song>>(
+          stream: _globalBloc.musicPlayerBloc.songs$,
+          builder: (BuildContext context, AsyncSnapshot<List<Song>> snapshot) {
+            if (!snapshot.hasData) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            final List<Song> _songs = snapshot.data;
 
-          return ListView.builder(
-            itemCount: _songs.length,
-            itemBuilder: (BuildContext context, int index) {
-              return StreamBuilder<MapEntry<PlayerState, Song>>(
-                stream: _globalBloc.musicPlayerBloc.playerState$,
-                builder: (BuildContext context,
-                    AsyncSnapshot<MapEntry<PlayerState, Song>> snapshot) {
-                  if (!snapshot.hasData) {
-                    return Container();
-                  }
-                  final PlayerState _state = snapshot.data.key;
-                  final Song _currentSong = snapshot.data.value;
-                  final bool _isSelectedSong = _currentSong == _songs[index];
-                  return GestureDetector(
-                    onTap: () {
-                      _globalBloc.musicPlayerBloc.updatePlaylist(_songs);
-                      switch (_state) {
-                        case PlayerState.playing:
-                          if (_isSelectedSong) {
-                            _globalBloc.musicPlayerBloc
-                                .pauseMusic(_currentSong);
-                          } else {
-                            _globalBloc.musicPlayerBloc.stopMusic();
-                            _globalBloc.musicPlayerBloc.playMusic(
-                              _songs[index],
-                            );
-                          }
-                          break;
-                        case PlayerState.paused:
-                          if (_isSelectedSong) {
+            return ListView.builder(
+              itemCount: _songs.length,
+              itemExtent: 90,
+              itemBuilder: (BuildContext context, int index) {
+                return StreamBuilder<MapEntry<PlayerState, Song>>(
+                  stream: _globalBloc.musicPlayerBloc.playerState$,
+                  builder: (BuildContext context,
+                      AsyncSnapshot<MapEntry<PlayerState, Song>> snapshot) {
+                    if (!snapshot.hasData) {
+                      return Container();
+                    }
+                    final PlayerState _state = snapshot.data.key;
+                    final Song _currentSong = snapshot.data.value;
+                    final bool _isSelectedSong = _currentSong == _songs[index];
+                    return GestureDetector(
+                      onTap: () {
+                        _globalBloc.musicPlayerBloc.updatePlaylist(_songs);
+                        switch (_state) {
+                          case PlayerState.playing:
+                            if (_isSelectedSong) {
+                              _globalBloc.musicPlayerBloc
+                                  .pauseMusic(_currentSong);
+                            } else {
+                              _globalBloc.musicPlayerBloc.stopMusic();
+                              _globalBloc.musicPlayerBloc.playMusic(
+                                _songs[index],
+                              );
+                            }
+                            break;
+                          case PlayerState.paused:
+                            if (_isSelectedSong) {
+                              _globalBloc.musicPlayerBloc
+                                  .playMusic(_songs[index]);
+                            } else {
+                              _globalBloc.musicPlayerBloc.stopMusic();
+                              _globalBloc.musicPlayerBloc.playMusic(
+                                _songs[index],
+                              );
+                            }
+                            break;
+                          case PlayerState.stopped:
                             _globalBloc.musicPlayerBloc
                                 .playMusic(_songs[index]);
-                          } else {
-                            _globalBloc.musicPlayerBloc.stopMusic();
-                            _globalBloc.musicPlayerBloc.playMusic(
-                              _songs[index],
-                            );
-                          }
-                          break;
-                        case PlayerState.stopped:
-                          _globalBloc.musicPlayerBloc.playMusic(_songs[index]);
-                          break;
-                        default:
-                          break;
-                      }
-                    },
-                    child: SongTile(
-                      song: _songs[index],
-                    ),
-                  );
-                },
-              );
-            },
-          );
-        },
+                            break;
+                          default:
+                            break;
+                        }
+                      },
+                      child: SongTile(
+                        song: _songs[index],
+                      ),
+                    );
+                  },
+                );
+              },
+            );
+          },
+        ),
       ),
     );
   }
