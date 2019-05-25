@@ -18,7 +18,18 @@ class MusicPlayerBloc {
   MusicPlayerBloc() {
     _songs$ = BehaviorSubject<List<Song>>();
     _playerState$ = BehaviorSubject<MapEntry<PlayerState, Song>>.seeded(
-      MapEntry(PlayerState.stopped, null),
+      MapEntry(
+          PlayerState.stopped,
+          Song(
+            null,
+            " ",
+            " ",
+            " ",
+            null,
+            null,
+            null,
+            null,
+          )),
     );
     _duration$ = BehaviorSubject<Duration>();
     _playlist$ = BehaviorSubject<List<Song>>();
