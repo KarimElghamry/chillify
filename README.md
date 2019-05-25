@@ -1,4 +1,4 @@
-# music_app
+# Chillify
 
 A new Flutter project.
 
