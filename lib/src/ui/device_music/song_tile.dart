@@ -1,6 +1,7 @@
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/material.dart';
 import 'package:music_app/src/blocs/global.dart';
+import 'package:music_app/src/common/music_icons.dart';
 import 'package:music_app/src/models/playerstate.dart';
 import 'package:provider/provider.dart';
 
@@ -56,8 +57,12 @@ class SongTile extends StatelessWidget {
                       width: double.infinity,
                       alignment: Alignment.centerLeft,
                       child: _isSelectedSong && _state == PlayerState.playing
-                          ? PauseIcon()
-                          : PlayIcon(),
+                          ? PauseIcon(
+                              color: Color(0xFF6D84C1),
+                            )
+                          : PlayIcon(
+                              color: Color(0xFFA1AFBC),
+                            ),
                     ),
                   ),
                   Flexible(
@@ -67,18 +72,22 @@ class SongTile extends StatelessWidget {
                       child: Container(
                         width: double.infinity,
                         child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
                               _song.title,
                               style: TextStyle(
-                                fontSize: 16,
+                                fontSize: 20,
                                 color: Color(0xFF4D6B9C),
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w600,
                               ),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
+                            ),
+                            Divider(
+                              height: 10,
+                              color: Colors.transparent,
                             ),
                             Text(
                               _artists,
@@ -133,59 +142,5 @@ class SongTile extends StatelessWidget {
     _artists = _song.artist.split(";").reduce((String a, String b) {
       return a + " & " + b;
     });
-  }
-}
-
-class PlayIcon extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final double _radius = 55;
-    return Container(
-      width: _radius,
-      height: _radius,
-      decoration: BoxDecoration(
-        color: Colors.transparent,
-        border: Border.all(
-          color: Color(0xFFA1AFBC),
-        ),
-        borderRadius: BorderRadius.circular(
-          _radius,
-        ),
-      ),
-      child: Center(
-        child: Icon(
-          Icons.play_arrow,
-          color: Color(0xFFA1AFBC),
-          size: 32.0,
-        ),
-      ),
-    );
-  }
-}
-
-class PauseIcon extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final double _radius = 55;
-    return Container(
-      width: _radius,
-      height: _radius,
-      decoration: BoxDecoration(
-        color: Colors.transparent,
-        border: Border.all(
-          color: Color(0xFF6D84C1),
-        ),
-        borderRadius: BorderRadius.circular(
-          _radius,
-        ),
-      ),
-      child: Center(
-        child: Icon(
-          Icons.pause,
-          color: Color(0xFF6D84C1),
-          size: 32.0,
-        ),
-      ),
-    );
   }
 }
