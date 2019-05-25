@@ -19,10 +19,7 @@ class MusicPlayerBloc {
       MapEntry(PlayerState.stopped, null),
     );
     _duration$ = BehaviorSubject<Duration>();
-    _audioPlayer = MusicFinder();
-    _audioPlayer.setDurationHandler(
-      (Duration duration) => updateDuration(duration),
-    );
+    initAudioPlayer();
     fetchSongs();
   }
 
@@ -55,6 +52,16 @@ class MusicPlayerBloc {
 
   void updateDuration(Duration duration) {
     _duration$.add(duration);
+  }
+
+  void initAudioPlayer() {
+    _audioPlayer = MusicFinder();
+    _audioPlayer.setDurationHandler(
+      (Duration duration) => updateDuration(duration),
+    );
+    _audioPlayer.setCompletionHandler(() {
+      stopMusic();
+    });
   }
 
   void dispose() {
