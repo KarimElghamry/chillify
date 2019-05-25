@@ -67,7 +67,8 @@ class _DeviceMusicScreenState extends State<DeviceMusicScreen> {
       ),
       body: SlidingUpPanel(
         controller: _controller,
-        minHeight: 110,
+        minHeight: 100,
+        maxHeight: MediaQuery.of(context).size.height,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(20.0),
           topRight: Radius.circular(20.0),
@@ -106,9 +107,17 @@ class _DeviceMusicScreenState extends State<DeviceMusicScreen> {
             final List<Song> _songs = snapshot.data;
 
             return ListView.builder(
-              itemCount: _songs.length,
+              itemCount: _songs.length + 2,
               itemExtent: 90,
               itemBuilder: (BuildContext context, int index) {
+                if (index >= _songs.length) {
+                  return Container(
+                    height: 90,
+                    width: double.infinity,
+                    color: Colors.transparent,
+                  );
+                }
+
                 return StreamBuilder<MapEntry<PlayerState, Song>>(
                   stream: _globalBloc.musicPlayerBloc.playerState$,
                   builder: (BuildContext context,
