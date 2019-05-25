@@ -73,6 +73,18 @@ class MusicPlayerBloc {
     playMusic(_playlist[_index]);
   }
 
+  void playPreviousSong() {
+    final Song _currentSong = _playerState$.value.value;
+    final List<Song> _playlist = playlist$.value;
+    int _index = _playlist.indexOf(_currentSong);
+    if (_index == 0) {
+      _index = _playlist.length - 1;
+    } else {
+      _index--;
+    }
+    playMusic(_playlist[_index]);
+  }
+
   void initAudioPlayer() {
     _audioPlayer = MusicFinder();
     _audioPlayer.setDurationHandler(
