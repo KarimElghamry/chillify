@@ -23,6 +23,7 @@ dependencies:
   provider: ^2.0.1+1
   flute_music_player: ^0.0.6
   rxdart: ^0.22.0
+  permission_handler: 2.1.2
 
 dev_dependencies:
   flutter_test:
