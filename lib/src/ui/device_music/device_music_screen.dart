@@ -49,6 +49,7 @@ class DeviceMusicScreen extends StatelessWidget {
                     final bool _isSelectedSong = _currentSong == _songs[index];
                     return ListTile(
                       onTap: () {
+                        _globalBloc.musicPlayerBloc.updatePlaylist(_songs);
                         switch (_state) {
                           case PlayerState.playing:
                             if (_isSelectedSong) {
