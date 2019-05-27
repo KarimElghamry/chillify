@@ -8,6 +8,7 @@ class MusicPlayerBloc {
   BehaviorSubject<List<Song>> _playlist$;
   BehaviorSubject<Duration> _duration$;
   MusicFinder _audioPlayer;
+  Song _defaultSong;
 
   BehaviorSubject<List<Song>> get songs$ => _songs$;
   BehaviorSubject<MapEntry<PlayerState, Song>> get playerState$ =>
@@ -16,20 +17,22 @@ class MusicPlayerBloc {
   BehaviorSubject<Duration> get duration$ => _duration$;
 
   MusicPlayerBloc() {
+    _defaultSong = Song(
+      null,
+      " ",
+      " ",
+      " ",
+      null,
+      null,
+      null,
+      null,
+    );
     _songs$ = BehaviorSubject<List<Song>>();
     _playerState$ = BehaviorSubject<MapEntry<PlayerState, Song>>.seeded(
       MapEntry(
-          PlayerState.stopped,
-          Song(
-            null,
-            " ",
-            " ",
-            " ",
-            null,
-            null,
-            null,
-            null,
-          )),
+        PlayerState.stopped,
+        _defaultSong,
+      ),
     );
     _duration$ = BehaviorSubject<Duration>();
     _playlist$ = BehaviorSubject<List<Song>>();
@@ -57,7 +60,6 @@ class MusicPlayerBloc {
 
   Future<void> stopMusic() async {
     await _audioPlayer.stop();
-    updatePlayerState(PlayerState.stopped, null);
   }
 
   void updatePlayerState(PlayerState state, Song song) {

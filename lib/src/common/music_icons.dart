@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class PlayIcon extends StatelessWidget {
-  Color _color;
+  final Color _color;
 
   PlayIcon({@required Color color}) : _color = color;
 
@@ -32,7 +32,7 @@ class PlayIcon extends StatelessWidget {
 }
 
 class PauseIcon extends StatelessWidget {
-  Color _color;
+  final Color _color;
 
   PauseIcon({@required Color color}) : _color = color;
 
@@ -63,7 +63,7 @@ class PauseIcon extends StatelessWidget {
 }
 
 class ShowIcon extends StatelessWidget {
-  Color _color;
+  final Color _color;
 
   ShowIcon({@required Color color}) : _color = color;
 

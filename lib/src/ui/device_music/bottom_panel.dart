@@ -26,21 +26,7 @@ class BottomPanel extends StatelessWidget {
             if (!snapshot.hasData) {
               return Container();
             }
-            if (snapshot.data.value == null) {
-              return Container(
-                width: double.infinity,
-                height: double.infinity,
-                child: Center(
-                  child: Text(
-                    "Choose a song to play",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w400),
-                  ),
-                ),
-              );
-            }
+
             final PlayerState _state = snapshot.data.key;
             final Song _currentSong = snapshot.data.value;
             final String _artists = getArtists(_currentSong);
