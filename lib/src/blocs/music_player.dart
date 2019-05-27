@@ -6,6 +6,7 @@ class MusicPlayerBloc {
   BehaviorSubject<List<Song>> _songs$;
   BehaviorSubject<MapEntry<PlayerState, Song>> _playerState$;
   BehaviorSubject<List<Song>> _playlist$;
+  BehaviorSubject<Duration> _position$;
   BehaviorSubject<Duration> _duration$;
   MusicFinder _audioPlayer;
   Song _defaultSong;
@@ -14,6 +15,7 @@ class MusicPlayerBloc {
   BehaviorSubject<MapEntry<PlayerState, Song>> get playerState$ =>
       _playerState$;
   BehaviorSubject<List<Song>> get playlist$ => _playlist$;
+  BehaviorSubject<Duration> get position$ => _position$;
   BehaviorSubject<Duration> get duration$ => _duration$;
 
   MusicPlayerBloc() {
@@ -35,6 +37,7 @@ class MusicPlayerBloc {
       ),
     );
     _duration$ = BehaviorSubject<Duration>();
+    _position$ = BehaviorSubject<Duration>();
     _playlist$ = BehaviorSubject<List<Song>>();
     initAudioPlayer();
     fetchSongs();
@@ -70,6 +73,10 @@ class MusicPlayerBloc {
     _duration$.add(duration);
   }
 
+  void updatePosition(Duration duration) {
+    _position$.add(duration);
+  }
+
   void updatePlaylist(List<Song> playlist) {
     _playlist$.add(playlist);
   }
@@ -98,8 +105,14 @@ class MusicPlayerBloc {
     playMusic(_playlist[_index]);
   }
 
+  void audioSeek(double seconds) {
+    _audioPlayer.seek(seconds);
+  }
+
   void initAudioPlayer() {
     _audioPlayer = MusicFinder();
+    _audioPlayer
+        .setPositionHandler((Duration duration) => updatePosition(duration));
     _audioPlayer.setDurationHandler(
       (Duration duration) => updateDuration(duration),
     );
