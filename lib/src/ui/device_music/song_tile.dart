@@ -29,7 +29,8 @@ class SongTile extends StatelessWidget {
           final PlayerState _state = snapshot.data.key;
           final Song _currentSong = snapshot.data.value;
           final bool _isSelectedSong = _song == _currentSong;
-          return Container(
+          return AnimatedContainer(
+            duration: Duration(milliseconds: 250),
             height: 90,
             width: double.infinity,
             decoration: BoxDecoration(
@@ -40,12 +41,7 @@ class SongTile extends StatelessWidget {
                         Colors.white,
                       ],
                     )
-                  : LinearGradient(
-                      colors: [
-                        Colors.white,
-                        Colors.white,
-                      ],
-                    ),
+                  : null,
             ),
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
