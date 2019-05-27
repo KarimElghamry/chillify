@@ -32,21 +32,24 @@ class _DeviceMusicScreenState extends State<DeviceMusicScreen> {
   @override
   Widget build(BuildContext context) {
     final GlobalBloc _globalBloc = Provider.of<GlobalBloc>(context);
+    final double _radius = 25.0;
+    //TODO: add panel
     return SlidingUpPanel(
+      panel: null,
       controller: _controller,
       minHeight: 100,
       maxHeight: MediaQuery.of(context).size.height,
       borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(20.0),
-        topRight: Radius.circular(20.0),
+        topLeft: Radius.circular(_radius),
+        topRight: Radius.circular(_radius),
       ),
       collapsed: Container(
         width: double.infinity,
         height: double.infinity,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(20.0),
-            topRight: Radius.circular(20.0),
+            topLeft: Radius.circular(_radius),
+            topRight: Radius.circular(_radius),
           ),
           gradient: LinearGradient(
             begin: Alignment.topLeft,
@@ -108,7 +111,7 @@ class _DeviceMusicScreenState extends State<DeviceMusicScreen> {
 
             return ListView.builder(
               key: UniqueKey(),
-              padding: const EdgeInsets.only(bottom: 90.0),
+              padding: const EdgeInsets.only(bottom: 100.0),
               physics: BouncingScrollPhysics(),
               itemCount: _songs.length,
               itemExtent: 90,
