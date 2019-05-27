@@ -107,6 +107,7 @@ class _DeviceMusicScreenState extends State<DeviceMusicScreen> {
             final List<Song> _songs = snapshot.data;
 
             return ListView.builder(
+              physics: BouncingScrollPhysics(),
               itemCount: _songs.length + 2,
               itemExtent: 90,
               itemBuilder: (BuildContext context, int index) {
