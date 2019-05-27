@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class PlayIcon extends StatelessWidget {
-  Color _color;
+  final Color _color;
 
   PlayIcon({@required Color color}) : _color = color;
 
