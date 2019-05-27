@@ -154,15 +154,7 @@ class BottomPanel extends StatelessWidget {
                                 min: 0,
                                 max: _songDurationInSeconds.toDouble(),
                                 value: _seconds.toDouble(),
-                                onChanged: (double value) =>
-                                    _globalBloc.musicPlayerBloc.updatePosition(
-                                      Duration(
-                                        seconds: value.toInt(),
-                                      ),
-                                    ),
-                                onChangeEnd: (double value) => _globalBloc
-                                    .musicPlayerBloc
-                                    .audioSeek(value),
+                                onChanged: (value) => null,
                                 activeColor: Colors.white,
                                 inactiveColor: Colors.white.withOpacity(0.5),
                               );
