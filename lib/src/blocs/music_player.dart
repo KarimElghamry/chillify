@@ -39,7 +39,6 @@ class MusicPlayerBloc {
       ),
     );
     _initAudioPlayer();
-    fetchSongs();
   }
 
   void fetchSongs() async {
