@@ -29,39 +29,41 @@ class _MusicHomepageState extends State<MusicHomepage> {
   Widget build(BuildContext context) {
     final double _radius = 25.0;
     //TODO: add panel
-    return SlidingUpPanel(
-      panel: null,
-      controller: _controller,
-      minHeight: 110,
-      maxHeight: MediaQuery.of(context).size.height,
-      borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(_radius),
-        topRight: Radius.circular(_radius),
-      ),
-      collapsed: Container(
-        width: double.infinity,
-        height: double.infinity,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(_radius),
-            topRight: Radius.circular(_radius),
-          ),
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            stops: [
-              0.0,
-              0.8,
-            ],
-            colors: [
-              Color(0xFF4D90CD),
-              Color(0xFFDF5F9D),
-            ],
-          ),
+    return Scaffold(
+      body: SlidingUpPanel(
+        panel: null,
+        controller: _controller,
+        minHeight: 110,
+        maxHeight: MediaQuery.of(context).size.height,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(_radius),
+          topRight: Radius.circular(_radius),
         ),
-        child: BottomPanel(controller: _controller),
+        collapsed: Container(
+          width: double.infinity,
+          height: double.infinity,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(_radius),
+              topRight: Radius.circular(_radius),
+            ),
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              stops: [
+                0.0,
+                0.8,
+              ],
+              colors: [
+                Color(0xFF4D90CD),
+                Color(0xFFDF5F9D),
+              ],
+            ),
+          ),
+          child: BottomPanel(controller: _controller),
+        ),
+        body: AllSongsScreen(),
       ),
-      body: AllSongsScreen(),
     );
   }
 }
