@@ -76,6 +76,9 @@ class MusicPlayerBloc {
   }
 
   void playNextSong() {
+    if (_playerState$.value.key == PlayerState.stopped) {
+      return;
+    }
     final Song _currentSong = _playerState$.value.value;
     final List<Song> _playlist = playlist$.value;
     int _index = _playlist.indexOf(_currentSong);
@@ -89,6 +92,9 @@ class MusicPlayerBloc {
   }
 
   void playPreviousSong() {
+    if (_playerState$.value.key == PlayerState.stopped) {
+      return;
+    }
     final Song _currentSong = _playerState$.value.value;
     final List<Song> _playlist = playlist$.value;
     int _index = _playlist.indexOf(_currentSong);

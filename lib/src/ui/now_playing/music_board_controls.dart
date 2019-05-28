@@ -16,7 +16,7 @@ class MusicBoardControls extends StatelessWidget {
           Align(
             alignment: Alignment.center,
             child: Container(
-              width: MediaQuery.of(context).size.width / 1.6,
+              width: MediaQuery.of(context).size.width / 1.55,
               height: 60,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(30),
