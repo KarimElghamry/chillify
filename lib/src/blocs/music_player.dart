@@ -124,9 +124,11 @@ class MusicPlayerBloc {
   }
 
   void dispose() {
+    _isAudioSeeking$.close();
     _songs$.close();
     _playerState$.close();
     _playlist$.close();
+    _position$.close();
     _audioPlayer.stop();
   }
 }
