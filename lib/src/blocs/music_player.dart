@@ -84,6 +84,7 @@ class MusicPlayerBloc {
     } else {
       _index++;
     }
+    stopMusic();
     playMusic(_playlist[_index]);
   }
 
@@ -96,6 +97,7 @@ class MusicPlayerBloc {
     } else {
       _index--;
     }
+    stopMusic();
     playMusic(_playlist[_index]);
   }
 
