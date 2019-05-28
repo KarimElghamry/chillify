@@ -52,13 +52,21 @@ class SongTile extends StatelessWidget {
                     child: Container(
                       width: double.infinity,
                       alignment: Alignment.centerLeft,
-                      child: _isSelectedSong && _state == PlayerState.playing
-                          ? PauseIcon(
-                              color: Color(0xFF6D84C1),
-                            )
-                          : PlayIcon(
-                              color: Color(0xFFA1AFBC),
-                            ),
+                      child: AnimatedCrossFade(
+                        duration: Duration(
+                          milliseconds: 150,
+                        ),
+                        firstChild: PauseIcon(
+                          color: Color(0xFF6D84C1),
+                        ),
+                        secondChild: PlayIcon(
+                          color: Color(0xFFA1AFBC),
+                        ),
+                        crossFadeState:
+                            _isSelectedSong && _state == PlayerState.playing
+                                ? CrossFadeState.showFirst
+                                : CrossFadeState.showSecond,
+                      ),
                     ),
                   ),
                   Flexible(
