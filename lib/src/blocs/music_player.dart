@@ -6,7 +6,8 @@ class MusicPlayerBloc {
   BehaviorSubject<List<Song>> _songs$;
   BehaviorSubject<MapEntry<PlayerState, Song>> _playerState$;
   BehaviorSubject<List<Song>> _playlist$;
-  BehaviorSubject<Duration> _duration$;
+  BehaviorSubject<Duration> _position$;
+  BehaviorSubject<bool> _isAudioSeeking$;
   MusicFinder _audioPlayer;
   Song _defaultSong;
 
@@ -14,7 +15,7 @@ class MusicPlayerBloc {
   BehaviorSubject<MapEntry<PlayerState, Song>> get playerState$ =>
       _playerState$;
   BehaviorSubject<List<Song>> get playlist$ => _playlist$;
-  BehaviorSubject<Duration> get duration$ => _duration$;
+  BehaviorSubject<Duration> get position$ => _position$;
 
   MusicPlayerBloc() {
     _defaultSong = Song(
@@ -27,16 +28,17 @@ class MusicPlayerBloc {
       null,
       null,
     );
+    _isAudioSeeking$ = BehaviorSubject<bool>.seeded(false);
     _songs$ = BehaviorSubject<List<Song>>();
+    _position$ = BehaviorSubject<Duration>();
+    _playlist$ = BehaviorSubject<List<Song>>();
     _playerState$ = BehaviorSubject<MapEntry<PlayerState, Song>>.seeded(
       MapEntry(
         PlayerState.stopped,
         _defaultSong,
       ),
     );
-    _duration$ = BehaviorSubject<Duration>();
-    _playlist$ = BehaviorSubject<List<Song>>();
-    initAudioPlayer();
+    _initAudioPlayer();
     fetchSongs();
   }
 
@@ -66,8 +68,8 @@ class MusicPlayerBloc {
     _playerState$.add(MapEntry(state, song));
   }
 
-  void updateDuration(Duration duration) {
-    _duration$.add(duration);
+  void updatePosition(Duration duration) {
+    _position$.add(duration);
   }
 
   void updatePlaylist(List<Song> playlist) {
@@ -98,10 +100,24 @@ class MusicPlayerBloc {
     playMusic(_playlist[_index]);
   }
 
-  void initAudioPlayer() {
+  void audioSeek(double seconds) {
+    _audioPlayer.seek(seconds);
+  }
+
+  void invertSeekingState() {
+    final _value = _isAudioSeeking$.value;
+    _isAudioSeeking$.add(!_value);
+  }
+
+  void _initAudioPlayer() {
     _audioPlayer = MusicFinder();
-    _audioPlayer.setDurationHandler(
-      (Duration duration) => updateDuration(duration),
+    _audioPlayer.setPositionHandler(
+      (Duration duration) {
+        final bool _isAudioSeeking = _isAudioSeeking$.value;
+        if (!_isAudioSeeking) {
+          updatePosition(duration);
+        }
+      },
     );
     _audioPlayer.setCompletionHandler(() {
       playNextSong();
@@ -111,7 +127,6 @@ class MusicPlayerBloc {
   void dispose() {
     _songs$.close();
     _playerState$.close();
-    _duration$.close();
     _playlist$.close();
     _audioPlayer.stop();
   }

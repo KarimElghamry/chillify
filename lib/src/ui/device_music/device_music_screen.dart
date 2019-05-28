@@ -37,7 +37,7 @@ class _DeviceMusicScreenState extends State<DeviceMusicScreen> {
     return SlidingUpPanel(
       panel: null,
       controller: _controller,
-      minHeight: 100,
+      minHeight: 110,
       maxHeight: MediaQuery.of(context).size.height,
       borderRadius: BorderRadius.only(
         topLeft: Radius.circular(_radius),
@@ -111,10 +111,10 @@ class _DeviceMusicScreenState extends State<DeviceMusicScreen> {
 
             return ListView.builder(
               key: UniqueKey(),
-              padding: const EdgeInsets.only(bottom: 100.0),
+              padding: const EdgeInsets.only(bottom: 110.0),
               physics: BouncingScrollPhysics(),
               itemCount: _songs.length,
-              itemExtent: 90,
+              itemExtent: 100,
               itemBuilder: (BuildContext context, int index) {
                 return StreamBuilder<MapEntry<PlayerState, Song>>(
                   stream: _globalBloc.musicPlayerBloc.playerState$,
