@@ -7,6 +7,7 @@ class MusicPlayerBloc {
   BehaviorSubject<MapEntry<PlayerState, Song>> _playerState$;
   BehaviorSubject<List<Song>> _playlist$;
   BehaviorSubject<Duration> _position$;
+  BehaviorSubject<bool> _isAudioSeeking$;
   MusicFinder _audioPlayer;
   Song _defaultSong;
 
@@ -27,16 +28,17 @@ class MusicPlayerBloc {
       null,
       null,
     );
+    _isAudioSeeking$ = BehaviorSubject<bool>.seeded(false);
     _songs$ = BehaviorSubject<List<Song>>();
+    _position$ = BehaviorSubject<Duration>();
+    _playlist$ = BehaviorSubject<List<Song>>();
     _playerState$ = BehaviorSubject<MapEntry<PlayerState, Song>>.seeded(
       MapEntry(
         PlayerState.stopped,
         _defaultSong,
       ),
     );
-    _position$ = BehaviorSubject<Duration>();
-    _playlist$ = BehaviorSubject<List<Song>>();
-    initAudioPlayer();
+    _initAudioPlayer();
     fetchSongs();
   }
 
@@ -102,10 +104,21 @@ class MusicPlayerBloc {
     _audioPlayer.seek(seconds);
   }
 
-  void initAudioPlayer() {
+  void invertSeekingState() {
+    final _value = _isAudioSeeking$.value;
+    _isAudioSeeking$.add(!_value);
+  }
+
+  void _initAudioPlayer() {
     _audioPlayer = MusicFinder();
-    _audioPlayer
-        .setPositionHandler((Duration duration) => updatePosition(duration));
+    _audioPlayer.setPositionHandler(
+      (Duration duration) {
+        final bool _isAudioSeeking = _isAudioSeeking$.value;
+        if (!_isAudioSeeking) {
+          updatePosition(duration);
+        }
+      },
+    );
     _audioPlayer.setCompletionHandler(() {
       playNextSong();
     });
