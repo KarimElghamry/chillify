@@ -2,15 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:music_app/src/ui/all_songs/all_songs_screen.dart';
-import 'package:music_app/src/ui/device_music/bottom_panel.dart';
+import 'package:music_app/src/ui/music_homepage/bottom_panel.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
-class DeviceMusicScreen extends StatefulWidget {
+class MusicHomepage extends StatefulWidget {
   @override
-  _DeviceMusicScreenState createState() => _DeviceMusicScreenState();
+  _MusicHomepageState createState() => _MusicHomepageState();
 }
 
-class _DeviceMusicScreenState extends State<DeviceMusicScreen> {
+class _MusicHomepageState extends State<MusicHomepage> {
   PanelController _controller;
 
   @override

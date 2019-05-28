@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:music_app/src/blocs/global.dart';
-import 'package:music_app/src/ui/device_music/device_music_screen.dart';
+import 'package:music_app/src/common/request_permision.dart';
+import 'package:music_app/src/ui/music_homepage/music_homepage.dart';
 import 'package:provider/provider.dart';
-
-import 'common/request_permision.dart';
 
 class ChillifyApp extends StatelessWidget {
   @override
@@ -14,7 +13,7 @@ class ChillifyApp extends StatelessWidget {
       dispose: (BuildContext context, GlobalBloc value) => value.dispose(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: DeviceMusicScreen(),
+        home: MusicHomepage(),
       ),
     );
   }
