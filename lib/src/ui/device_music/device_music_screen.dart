@@ -114,7 +114,7 @@ class _DeviceMusicScreenState extends State<DeviceMusicScreen> {
               padding: const EdgeInsets.only(bottom: 110.0),
               physics: BouncingScrollPhysics(),
               itemCount: _songs.length,
-              itemExtent: 90,
+              itemExtent: 100,
               itemBuilder: (BuildContext context, int index) {
                 return StreamBuilder<MapEntry<PlayerState, Song>>(
                   stream: _globalBloc.musicPlayerBloc.playerState$,

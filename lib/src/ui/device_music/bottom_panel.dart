@@ -59,20 +59,13 @@ class BottomPanel extends StatelessWidget {
                           child: Container(
                             width: double.infinity,
                             alignment: Alignment.centerLeft,
-                            child: AnimatedCrossFade(
-                              duration: Duration(
-                                milliseconds: 150,
-                              ),
-                              firstChild: PauseIcon(
-                                color: Colors.white,
-                              ),
-                              secondChild: PlayIcon(
-                                color: Colors.white,
-                              ),
-                              crossFadeState: _state == PlayerState.playing
-                                  ? CrossFadeState.showFirst
-                                  : CrossFadeState.showSecond,
-                            ),
+                            child: _state == PlayerState.playing
+                                ? PauseIcon(
+                                    color: Colors.white,
+                                  )
+                                : PlayIcon(
+                                    color: Colors.white,
+                                  ),
                           ),
                         ),
                       ),
