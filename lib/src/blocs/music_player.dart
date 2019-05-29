@@ -9,6 +9,7 @@ class MusicPlayerBloc {
   BehaviorSubject<List<Song>> _playlist$;
   BehaviorSubject<Duration> _position$;
   BehaviorSubject<List<Playback>> _playback$;
+  BehaviorSubject<List<Song>> _favorites$;
   BehaviorSubject<bool> _isAudioSeeking$;
   MusicFinder _audioPlayer;
   Song _defaultSong;
@@ -19,6 +20,7 @@ class MusicPlayerBloc {
   BehaviorSubject<List<Song>> get playlist$ => _playlist$;
   BehaviorSubject<Duration> get position$ => _position$;
   BehaviorSubject<List<Playback>> get playback$ => _playback$;
+  BehaviorSubject<List<Song>> get favorites$ => _favorites$;
 
   MusicPlayerBloc() {
     _defaultSong = Song(
@@ -101,14 +103,35 @@ class MusicPlayerBloc {
     playMusic(_playlist[_index]);
   }
 
-  void playSameSong() {
+  void _playSameSong() {
     final Song _currentSong = _playerState$.value.value;
     stopMusic();
     playMusic(_currentSong);
   }
 
+  void _onSongComplete() {
+    final List<Playback> _playback = _playback$.value;
+    if (_playback.contains(Playback.repeatSong)) {
+      _playSameSong();
+      return;
+    }
+    playNextSong();
+  }
+
   void audioSeek(double seconds) {
     _audioPlayer.seek(seconds);
+  }
+
+  void addToFavorites(Song song) {
+    List<Song> _favorites = _favorites$.value;
+    _favorites.add(song);
+    _favorites$.add(_favorites);
+  }
+
+  void removeFromFavorites(Song song) {
+    List<Song> _favorites = _favorites$.value;
+    _favorites.remove(song);
+    _favorites$.add(_favorites);
   }
 
   void invertSeekingState() {
@@ -138,14 +161,11 @@ class MusicPlayerBloc {
         }
       },
     );
-    _audioPlayer.setCompletionHandler(() {
-      final List<Playback> _playback = _playback$.value;
-      if (_playback.contains(Playback.repeatSong)) {
-        playSameSong();
-        return;
-      }
-      playNextSong();
-    });
+    _audioPlayer.setCompletionHandler(
+      () {
+        _onSongComplete();
+      },
+    );
   }
 
   void _initStreams() {
@@ -154,6 +174,7 @@ class MusicPlayerBloc {
     _position$ = BehaviorSubject<Duration>();
     _playlist$ = BehaviorSubject<List<Song>>();
     _playback$ = BehaviorSubject<List<Playback>>.seeded([]);
+    _favorites$ = BehaviorSubject<List<Song>>.seeded([]);
     _playerState$ = BehaviorSubject<MapEntry<PlayerState, Song>>.seeded(
       MapEntry(
         PlayerState.stopped,
@@ -169,6 +190,7 @@ class MusicPlayerBloc {
     _playlist$.close();
     _position$.close();
     _playback$.close();
+    _favorites$.close();
     _audioPlayer.stop();
   }
 }
