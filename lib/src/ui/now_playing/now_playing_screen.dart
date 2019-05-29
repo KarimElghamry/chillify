@@ -2,6 +2,7 @@ import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/material.dart';
 import 'package:music_app/src/blocs/global.dart';
 import 'package:music_app/src/common/music_icons.dart';
+import 'package:music_app/src/models/playback.dart';
 import 'package:music_app/src/models/playerstate.dart';
 import 'package:music_app/src/ui/now_playing/album_art_container.dart';
 import 'package:music_app/src/ui/now_playing/empty_album_art.dart';
@@ -64,15 +65,69 @@ class NowPlayingScreen extends StatelessWidget {
               size: 35,
               color: Color(0xFFC7D2E3),
             ),
-            Icon(
-              Icons.loop,
-              size: 35,
-              color: Color(0xFFC7D2E3),
+            StreamBuilder<List<Playback>>(
+              stream: _globalBloc.musicPlayerBloc.playback$,
+              builder: (BuildContext context,
+                  AsyncSnapshot<List<Playback>> snapshot) {
+                if (!snapshot.hasData) {
+                  return Icon(
+                    Icons.loop,
+                    size: 35,
+                    color: Color(0xFFC7D2E3),
+                  );
+                }
+                final List<Playback> _playbackList = snapshot.data;
+                final bool _isSelected =
+                    _playbackList.contains(Playback.repeatSong);
+                return IconButton(
+                  onPressed: () {
+                    if (!_isSelected) {
+                      _globalBloc.musicPlayerBloc
+                          .updatePlayback(Playback.repeatSong);
+                    } else {
+                      _globalBloc.musicPlayerBloc
+                          .removePlayback(Playback.repeatSong);
+                    }
+                  },
+                  icon: Icon(
+                    Icons.loop,
+                    size: 35,
+                    color: !_isSelected ? Color(0xFFC7D2E3) : Color(0xFF7B92CA),
+                  ),
+                );
+              },
             ),
-            Icon(
-              Icons.shuffle,
-              size: 35,
-              color: Color(0xFFC7D2E3),
+            StreamBuilder<List<Playback>>(
+              stream: _globalBloc.musicPlayerBloc.playback$,
+              builder: (BuildContext context,
+                  AsyncSnapshot<List<Playback>> snapshot) {
+                if (!snapshot.hasData) {
+                  return Icon(
+                    Icons.loop,
+                    size: 35,
+                    color: Color(0xFFC7D2E3),
+                  );
+                }
+                final List<Playback> _playbackList = snapshot.data;
+                final bool _isSelected =
+                    _playbackList.contains(Playback.shuffle);
+                return IconButton(
+                  onPressed: () {
+                    if (!_isSelected) {
+                      _globalBloc.musicPlayerBloc
+                          .updatePlayback(Playback.shuffle);
+                    } else {
+                      _globalBloc.musicPlayerBloc
+                          .removePlayback(Playback.shuffle);
+                    }
+                  },
+                  icon: Icon(
+                    Icons.shuffle,
+                    size: 35,
+                    color: !_isSelected ? Color(0xFFC7D2E3) : Color(0xFF7B92CA),
+                  ),
+                );
+              },
             ),
           ],
         ),

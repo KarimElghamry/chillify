@@ -31,7 +31,7 @@ class _MusicHomepageState extends State<MusicHomepage> {
     final double _radius = 25.0;
     return Scaffold(
       body: SlidingUpPanel(
-        panel: NowPlayingScreen(),
+        panel: Material(child: NowPlayingScreen()),
         controller: _controller,
         minHeight: 110,
         maxHeight: MediaQuery.of(context).size.height,

@@ -1,4 +1,5 @@
 import 'package:flute_music_player/flute_music_player.dart';
+import 'package:music_app/src/models/playback.dart';
 import 'package:music_app/src/models/playerstate.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -7,6 +8,7 @@ class MusicPlayerBloc {
   BehaviorSubject<MapEntry<PlayerState, Song>> _playerState$;
   BehaviorSubject<List<Song>> _playlist$;
   BehaviorSubject<Duration> _position$;
+  BehaviorSubject<List<Playback>> _playback$;
   BehaviorSubject<bool> _isAudioSeeking$;
   MusicFinder _audioPlayer;
   Song _defaultSong;
@@ -16,6 +18,7 @@ class MusicPlayerBloc {
       _playerState$;
   BehaviorSubject<List<Song>> get playlist$ => _playlist$;
   BehaviorSubject<Duration> get position$ => _position$;
+  BehaviorSubject<List<Playback>> get playback$ => _playback$;
 
   MusicPlayerBloc() {
     _defaultSong = Song(
@@ -28,16 +31,7 @@ class MusicPlayerBloc {
       null,
       null,
     );
-    _isAudioSeeking$ = BehaviorSubject<bool>.seeded(false);
-    _songs$ = BehaviorSubject<List<Song>>();
-    _position$ = BehaviorSubject<Duration>();
-    _playlist$ = BehaviorSubject<List<Song>>();
-    _playerState$ = BehaviorSubject<MapEntry<PlayerState, Song>>.seeded(
-      MapEntry(
-        PlayerState.stopped,
-        _defaultSong,
-      ),
-    );
+    _initStreams();
     _initAudioPlayer();
   }
 
@@ -107,6 +101,12 @@ class MusicPlayerBloc {
     playMusic(_playlist[_index]);
   }
 
+  void playSameSong() {
+    final Song _currentSong = _playerState$.value.value;
+    stopMusic();
+    playMusic(_currentSong);
+  }
+
   void audioSeek(double seconds) {
     _audioPlayer.seek(seconds);
   }
@@ -114,6 +114,18 @@ class MusicPlayerBloc {
   void invertSeekingState() {
     final _value = _isAudioSeeking$.value;
     _isAudioSeeking$.add(!_value);
+  }
+
+  void updatePlayback(Playback playback) {
+    List<Playback> _value = playback$.value;
+    _value.add(playback);
+    _playback$.add(_value);
+  }
+
+  void removePlayback(Playback playback) {
+    List<Playback> _value = playback$.value;
+    _value.remove(playback);
+    _playback$.add(_value);
   }
 
   void _initAudioPlayer() {
@@ -127,8 +139,27 @@ class MusicPlayerBloc {
       },
     );
     _audioPlayer.setCompletionHandler(() {
+      final List<Playback> _playback = _playback$.value;
+      if (_playback.contains(Playback.repeatSong)) {
+        playSameSong();
+        return;
+      }
       playNextSong();
     });
+  }
+
+  void _initStreams() {
+    _isAudioSeeking$ = BehaviorSubject<bool>.seeded(false);
+    _songs$ = BehaviorSubject<List<Song>>();
+    _position$ = BehaviorSubject<Duration>();
+    _playlist$ = BehaviorSubject<List<Song>>();
+    _playback$ = BehaviorSubject<List<Playback>>.seeded([]);
+    _playerState$ = BehaviorSubject<MapEntry<PlayerState, Song>>.seeded(
+      MapEntry(
+        PlayerState.stopped,
+        _defaultSong,
+      ),
+    );
   }
 
   void dispose() {
@@ -137,6 +168,7 @@ class MusicPlayerBloc {
     _playerState$.close();
     _playlist$.close();
     _position$.close();
+    _playback$.close();
     _audioPlayer.stop();
   }
 }
