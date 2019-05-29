@@ -25,11 +25,12 @@ class AlbumArtContainer extends StatelessWidget {
           Container(
             width: double.infinity,
             height: _albumArtSize,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(_currentSong.albumArt),
-                fit: BoxFit.fill,
+            child: FadeInImage(
+              placeholder: AssetImage(_currentSong.albumArt),
+              image: AssetImage(
+                _currentSong.albumArt,
               ),
+              fit: BoxFit.fill,
             ),
           ),
           Opacity(
