@@ -9,8 +9,14 @@ import 'package:music_app/src/ui/now_playing/music_board_controls.dart';
 import 'package:music_app/src/ui/now_playing/now_playing_slider.dart';
 import 'package:music_app/src/ui/now_playing/preferences_board.dart';
 import 'package:provider/provider.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class NowPlayingScreen extends StatelessWidget {
+  final PanelController _controller;
+
+  NowPlayingScreen({@required PanelController controller})
+      : _controller = controller;
+
   @override
   Widget build(BuildContext context) {
     final GlobalBloc _globalBloc = Provider.of<GlobalBloc>(context);
@@ -126,8 +132,11 @@ class NowPlayingScreen extends StatelessWidget {
                 ),
                 Flexible(
                   flex: 2,
-                  child: HideIcon(
-                    color: Color(0xFF90A4D4),
+                  child: GestureDetector(
+                    onTap: () => _controller.close(),
+                    child: HideIcon(
+                      color: Color(0xFF90A4D4),
+                    ),
                   ),
                 )
               ],

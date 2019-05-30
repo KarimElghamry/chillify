@@ -91,10 +91,11 @@ class BottomPanel extends StatelessWidget {
                                 color: Colors.transparent,
                               ),
                               Text(
-                                _artists,
+                                _artists.toUpperCase(),
                                 style: TextStyle(
                                   fontSize: 16,
                                   color: Colors.white,
+                                  letterSpacing: 1,
                                 ),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,

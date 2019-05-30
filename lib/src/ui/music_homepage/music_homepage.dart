@@ -29,46 +29,54 @@ class _MusicHomepageState extends State<MusicHomepage> {
   @override
   Widget build(BuildContext context) {
     final double _radius = 25.0;
-    return Scaffold(
-      body: SlidingUpPanel(
-        panel: ClipRRect(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(_radius),
-            topRight: Radius.circular(_radius),
-          ),
-          child: NowPlayingScreen(),
-        ),
-        controller: _controller,
-        minHeight: 110,
-        maxHeight: MediaQuery.of(context).size.height,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(_radius),
-          topRight: Radius.circular(_radius),
-        ),
-        collapsed: Container(
-          width: double.infinity,
-          height: double.infinity,
-          decoration: BoxDecoration(
+    return WillPopScope(
+      onWillPop: () {
+        if (_controller.isPanelClosed()) {
+          return Future<bool>.value(true);
+        }
+        _controller.close();
+      },
+      child: Scaffold(
+        body: SlidingUpPanel(
+          panel: ClipRRect(
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(_radius),
               topRight: Radius.circular(_radius),
             ),
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              stops: [
-                0.0,
-                0.7,
-              ],
-              colors: [
-                Color(0xFF47ACE1),
-                Color(0xFFDF5F9D),
-              ],
-            ),
+            child: NowPlayingScreen(controller: _controller),
           ),
-          child: BottomPanel(controller: _controller),
+          controller: _controller,
+          minHeight: 110,
+          maxHeight: MediaQuery.of(context).size.height,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(_radius),
+            topRight: Radius.circular(_radius),
+          ),
+          collapsed: Container(
+            width: double.infinity,
+            height: double.infinity,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(_radius),
+                topRight: Radius.circular(_radius),
+              ),
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                stops: [
+                  0.0,
+                  0.7,
+                ],
+                colors: [
+                  Color(0xFF47ACE1),
+                  Color(0xFFDF5F9D),
+                ],
+              ),
+            ),
+            child: BottomPanel(controller: _controller),
+          ),
+          body: AllSongsScreen(),
         ),
-        body: AllSongsScreen(),
       ),
     );
   }
