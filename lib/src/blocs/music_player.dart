@@ -6,7 +6,8 @@ import 'package:rxdart/rxdart.dart';
 class MusicPlayerBloc {
   BehaviorSubject<List<Song>> _songs$;
   BehaviorSubject<MapEntry<PlayerState, Song>> _playerState$;
-  BehaviorSubject<List<Song>> _playlist$;
+  BehaviorSubject<MapEntry<List<Song>, List<Song>>>
+      _playlist$; //key is normal, value is shuffle
   BehaviorSubject<Duration> _position$;
   BehaviorSubject<List<Playback>> _playback$;
   BehaviorSubject<List<Song>> _favorites$;
@@ -17,7 +18,6 @@ class MusicPlayerBloc {
   BehaviorSubject<List<Song>> get songs$ => _songs$;
   BehaviorSubject<MapEntry<PlayerState, Song>> get playerState$ =>
       _playerState$;
-  BehaviorSubject<List<Song>> get playlist$ => _playlist$;
   BehaviorSubject<Duration> get position$ => _position$;
   BehaviorSubject<List<Playback>> get playback$ => _playback$;
   BehaviorSubject<List<Song>> get favorites$ => _favorites$;
@@ -67,8 +67,10 @@ class MusicPlayerBloc {
     _position$.add(duration);
   }
 
-  void updatePlaylist(List<Song> playlist) {
-    _playlist$.add(playlist);
+  void updatePlaylist(List<Song> normalPlaylist) {
+    List<Song> _shufflePlaylist = []..addAll(normalPlaylist);
+    _shufflePlaylist.shuffle();
+    _playlist$.add(MapEntry(normalPlaylist, _shufflePlaylist));
   }
 
   void playNextSong() {
@@ -76,7 +78,9 @@ class MusicPlayerBloc {
       return;
     }
     final Song _currentSong = _playerState$.value.value;
-    final List<Song> _playlist = playlist$.value;
+    final bool _isShuffle = _playback$.value.contains(Playback.shuffle);
+    final List<Song> _playlist =
+        _isShuffle ? _playlist$.value.value : _playlist$.value.key;
     int _index = _playlist.indexOf(_currentSong);
     if (_index == _playlist.length - 1) {
       _index = 0;
@@ -92,7 +96,9 @@ class MusicPlayerBloc {
       return;
     }
     final Song _currentSong = _playerState$.value.value;
-    final List<Song> _playlist = playlist$.value;
+    final bool _isShuffle = _playback$.value.contains(Playback.shuffle);
+    final List<Song> _playlist =
+        _isShuffle ? _playlist$.value.value : _playlist$.value.key;
     int _index = _playlist.indexOf(_currentSong);
     if (_index == 0) {
       _index = _playlist.length - 1;
@@ -172,7 +178,7 @@ class MusicPlayerBloc {
     _isAudioSeeking$ = BehaviorSubject<bool>.seeded(false);
     _songs$ = BehaviorSubject<List<Song>>();
     _position$ = BehaviorSubject<Duration>();
-    _playlist$ = BehaviorSubject<List<Song>>();
+    _playlist$ = BehaviorSubject<MapEntry<List<Song>, List<Song>>>();
     _playback$ = BehaviorSubject<List<Playback>>.seeded([]);
     _favorites$ = BehaviorSubject<List<Song>>.seeded([]);
     _playerState$ = BehaviorSubject<MapEntry<PlayerState, Song>>.seeded(
