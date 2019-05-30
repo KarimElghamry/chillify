@@ -1,5 +1,6 @@
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:music_app/src/blocs/global.dart';
 import 'package:music_app/src/models/playerstate.dart';
 import 'package:provider/provider.dart';
@@ -16,7 +17,7 @@ class MusicBoardControls extends StatelessWidget {
           Align(
             alignment: Alignment.center,
             child: Container(
-              width: MediaQuery.of(context).size.width / 1.55,
+              width: 245,
               height: 60,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(30),

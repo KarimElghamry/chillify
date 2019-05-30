@@ -147,6 +147,10 @@ class MusicPlayerBloc {
 
   void updatePlayback(Playback playback) {
     List<Playback> _value = playback$.value;
+    if (playback == Playback.shuffle) {
+      final List<Song> _normalPlaylist = _playlist$.value.key;
+      updatePlaylist(_normalPlaylist);
+    }
     _value.add(playback);
     _playback$.add(_value);
   }
