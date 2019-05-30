@@ -101,10 +101,11 @@ class SongTile extends StatelessWidget {
                                   color: Colors.transparent,
                                 ),
                                 Text(
-                                  _artists,
+                                  _artists.toUpperCase(),
                                   style: TextStyle(
                                     fontSize: 16,
-                                    color: Color(0xFFAAB7CB),
+                                    color: Color(0xFFADB9CD),
+                                    letterSpacing: 1,
                                   ),
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,

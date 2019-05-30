@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:music_app/src/ui/all_songs/all_songs_screen.dart';
 import 'package:music_app/src/ui/music_homepage/bottom_panel.dart';
+import 'package:music_app/src/ui/now_playing/now_playing_screen.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class MusicHomepage extends StatefulWidget {
@@ -28,10 +29,15 @@ class _MusicHomepageState extends State<MusicHomepage> {
   @override
   Widget build(BuildContext context) {
     final double _radius = 25.0;
-    //TODO: add panel
     return Scaffold(
       body: SlidingUpPanel(
-        panel: null,
+        panel: ClipRRect(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(_radius),
+            topRight: Radius.circular(_radius),
+          ),
+          child: NowPlayingScreen(),
+        ),
         controller: _controller,
         minHeight: 110,
         maxHeight: MediaQuery.of(context).size.height,
@@ -52,10 +58,10 @@ class _MusicHomepageState extends State<MusicHomepage> {
               end: Alignment.bottomRight,
               stops: [
                 0.0,
-                0.8,
+                0.7,
               ],
               colors: [
-                Color(0xFF4D90CD),
+                Color(0xFF47ACE1),
                 Color(0xFFDF5F9D),
               ],
             ),
