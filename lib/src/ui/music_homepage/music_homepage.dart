@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:music_app/src/blocs/global.dart';
 import 'package:music_app/src/ui/all_songs/all_songs_screen.dart';
+import 'package:music_app/src/ui/favorites/favorites_screen.dart';
 import 'package:music_app/src/ui/music_homepage/bottom_panel.dart';
 import 'package:music_app/src/ui/now_playing/now_playing_screen.dart';
 import 'package:provider/provider.dart';
@@ -132,7 +133,7 @@ class _MusicHomepageState extends State<MusicHomepage> {
                 physics: BouncingScrollPhysics(),
                 children: <Widget>[
                   AllSongsScreen(),
-                  Container(),
+                  FavoritesScreen(),
                 ],
               ),
             ),
