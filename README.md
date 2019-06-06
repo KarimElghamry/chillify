@@ -1,16 +1,36 @@
-# music_app
+# Chillify
 
-A new Flutter project.
+A Flutter music app made with Provider and BLoC pattern.
 
-## Getting Started
+UI heavily inspired by: https://dribbble.com/shots/6523216-Music-Player-Application/attachments
 
-This project is a starting point for a Flutter application.
+## Current Features
+[✓] Retrieve all songs
 
-A few resources to get you started if this is your first Flutter project:
+[✓] Pause
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+[✓] Play
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.dev/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+[✓] Seek
+
+[✓] Now Playing
+
+[✓] add to favorites
+
+[✓] Well-designed UI
+
+
+## TODO List
+᛫ Add SQLite database or alternatives
+
+᛫ Add tabs => Albums, Artists and Playlists
+
+᛫ Add search functionality
+
+᛫ Implement beautiful animations
+
+
+# Screenshots
+
+
+<img src="/first_screen.png" width="250"> <img src="/second_screen.png" width="250"> <img src="/third_screen.png" width="250">
