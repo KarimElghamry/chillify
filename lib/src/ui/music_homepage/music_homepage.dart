@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:music_app/src/blocs/global.dart';
 import 'package:music_app/src/ui/all_songs/all_songs_screen.dart';
 import 'package:music_app/src/ui/music_homepage/bottom_panel.dart';
 import 'package:music_app/src/ui/now_playing/now_playing_screen.dart';
+import 'package:provider/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class MusicHomepage extends StatefulWidget {
@@ -31,10 +34,11 @@ class _MusicHomepageState extends State<MusicHomepage> {
     final double _radius = 25.0;
     return WillPopScope(
       onWillPop: () {
-        if (_controller.isPanelClosed()) {
-          return Future<bool>.value(true);
+        if (!_controller.isPanelClosed()) {
+          _controller.close();
+        } else {
+          _showExitDialog();
         }
-        _controller.close();
       },
       child: Scaffold(
         body: SlidingUpPanel(
@@ -78,6 +82,46 @@ class _MusicHomepageState extends State<MusicHomepage> {
           body: AllSongsScreen(),
         ),
       ),
+    );
+  }
+
+  void _showExitDialog() {
+    final GlobalBloc _globalBloc = Provider.of<GlobalBloc>(context);
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            "Chillify",
+            style: TextStyle(
+              fontSize: 20,
+            ),
+          ),
+          content: Text(
+            "Are you sure you want to close the app?",
+            style: TextStyle(
+              fontSize: 18,
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              textColor: Color(0xFFDF5F9D),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text("NO"),
+            ),
+            FlatButton(
+              textColor: Color(0xFFDF5F9D),
+              onPressed: () {
+                SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+                _globalBloc.dispose();
+              },
+              child: Text("YES"),
+            ),
+          ],
+        );
+      },
     );
   }
 }
