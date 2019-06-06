@@ -7,10 +7,16 @@ import 'package:provider/provider.dart';
 
 class ChillifyApp extends StatelessWidget {
   final GlobalBloc _globalBloc = GlobalBloc();
+
   @override
   Widget build(BuildContext context) {
     return Provider<GlobalBloc>(
-      builder: (BuildContext context) => _globalBloc,
+      builder: (BuildContext context) {
+        _globalBloc.permissionsBloc.requestStoragePermission().then(
+              (_) => _globalBloc.musicPlayerBloc.fetchSongs(),
+            );
+        return _globalBloc;
+      },
       dispose: (BuildContext context, GlobalBloc value) => value.dispose(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -30,10 +36,11 @@ class ChillifyApp extends StatelessWidget {
             }
             final PermissionStatus _status = snapshot.data;
             if (_status == PermissionStatus.denied) {
+              _globalBloc.dispose();
               SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+            } else {
+              return MusicHomepage();
             }
-            _globalBloc.musicPlayerBloc.fetchSongs();
-            return MusicHomepage();
           },
         ),
       ),
