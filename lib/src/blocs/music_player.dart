@@ -194,6 +194,7 @@ class MusicPlayerBloc {
   }
 
   void dispose() {
+    stopMusic();
     _isAudioSeeking$.close();
     _songs$.close();
     _playerState$.close();
@@ -201,6 +202,5 @@ class MusicPlayerBloc {
     _position$.close();
     _playback$.close();
     _favorites$.close();
-    _audioPlayer.stop();
   }
 }
