@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:music_app/src/blocs/global.dart';
 import 'package:music_app/src/ui/music_homepage/music_homepage.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -12,9 +11,13 @@ class ChillifyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Provider<GlobalBloc>(
       builder: (BuildContext context) {
-        _globalBloc.permissionsBloc.requestStoragePermission().then(
-              (_) => _globalBloc.musicPlayerBloc.fetchSongs(),
-            );
+        _globalBloc.permissionsBloc.storagePermissionStatus$.listen(
+          (data) {
+            if (data == PermissionStatus.granted) {
+              _globalBloc.musicPlayerBloc.fetchSongs();
+            }
+          },
+        );
         return _globalBloc;
       },
       dispose: (BuildContext context, GlobalBloc value) => value.dispose(),
@@ -36,8 +39,15 @@ class ChillifyApp extends StatelessWidget {
             }
             final PermissionStatus _status = snapshot.data;
             if (_status == PermissionStatus.denied) {
-              _globalBloc.dispose();
-              SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+              _globalBloc.permissionsBloc.requestStoragePermission();
+              return Container(
+                height: double.infinity,
+                width: double.infinity,
+                color: Colors.white,
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              );
             } else {
               return MusicHomepage();
             }

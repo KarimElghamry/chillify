@@ -9,6 +9,7 @@ class PermissionsBloc {
 
   PermissionsBloc() {
     _storagePermissionStatus$ = BehaviorSubject<PermissionStatus>();
+    requestStoragePermission();
   }
 
   Future<void> requestStoragePermission() async {
