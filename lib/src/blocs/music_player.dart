@@ -2,6 +2,8 @@ import 'package:flute_music_player/flute_music_player.dart';
 import 'package:music_app/src/models/playback.dart';
 import 'package:music_app/src/models/playerstate.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 
 class MusicPlayerBloc {
   BehaviorSubject<List<Song>> _songs$;
@@ -37,7 +39,7 @@ class MusicPlayerBloc {
     _initAudioPlayer();
   }
 
-  void fetchSongs() async {
+  Future<void> fetchSongs() async {
     await MusicFinder.allSongs().then(
       (data) {
         _songs$.add(data);
@@ -128,16 +130,18 @@ class MusicPlayerBloc {
     _audioPlayer.seek(seconds);
   }
 
-  void addToFavorites(Song song) {
+  void addToFavorites(Song song) async {
     List<Song> _favorites = _favorites$.value;
     _favorites.add(song);
     _favorites$.add(_favorites);
+    await saveFavorites();
   }
 
-  void removeFromFavorites(Song song) {
+  void removeFromFavorites(Song song) async {
     List<Song> _favorites = _favorites$.value;
     _favorites.remove(song);
     _favorites$.add(_favorites);
+    await saveFavorites();
   }
 
   void invertSeekingState() {
@@ -176,6 +180,57 @@ class MusicPlayerBloc {
         _onSongComplete();
       },
     );
+  }
+
+  Future<void> saveFavorites() async {
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+    final List<Song> _favorites = _favorites$.value;
+    List<String> _encodedStrings = [];
+    for (Song song in _favorites) {
+      _encodedStrings.add(_encodeSongToJson(song));
+    }
+    _prefs.setStringList("favorites", _encodedStrings);
+  }
+
+  void retrieveFavorites() async {
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+    final List<Song> _fetchedSongs = _songs$.value;
+    List<String> _savedStrings = _prefs.getStringList("favorites") ?? [];
+    List<Song> _favorites = [];
+    for (String data in _savedStrings) {
+      final Song song = _decodeSongFromJson(data);
+      for (var fetchedSong in _fetchedSongs) {
+        if (song.id == fetchedSong.id) {
+          _favorites.add(fetchedSong);
+        }
+      }
+    }
+    _favorites$.add(_favorites);
+  }
+
+  String _encodeSongToJson(Song song) {
+    final _songMap = songToMap(song);
+    final data = json.encode(_songMap);
+    return data;
+  }
+
+  Song _decodeSongFromJson(String ecodedSong) {
+    final _songMap = json.decode(ecodedSong);
+    final Song _song = Song.fromMap(_songMap);
+    return _song;
+  }
+
+  Map<String, dynamic> songToMap(Song song) {
+    Map<String, dynamic> _map = {};
+    _map["album"] = song.album;
+    _map["id"] = song.id;
+    _map["artist"] = song.artist;
+    _map["title"] = song.title;
+    _map["albumId"] = song.albumId;
+    _map["duration"] = song.duration;
+    _map["uri"] = song.uri;
+    _map["albumArt"] = song.albumArt;
+    return _map;
   }
 
   void _initStreams() {

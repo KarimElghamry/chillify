@@ -14,7 +14,11 @@ class ChillifyApp extends StatelessWidget {
         _globalBloc.permissionsBloc.storagePermissionStatus$.listen(
           (data) {
             if (data == PermissionStatus.granted) {
-              _globalBloc.musicPlayerBloc.fetchSongs();
+              _globalBloc.musicPlayerBloc.fetchSongs().then(
+                (_) {
+                  _globalBloc.musicPlayerBloc.retrieveFavorites();
+                },
+              );
             }
           },
         );
