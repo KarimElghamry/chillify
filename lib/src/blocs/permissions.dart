@@ -9,10 +9,9 @@ class PermissionsBloc {
 
   PermissionsBloc() {
     _storagePermissionStatus$ = BehaviorSubject<PermissionStatus>();
-    requestStoragePermission();
   }
 
-  void requestStoragePermission() async {
+  Future<void> requestStoragePermission() async {
     Map<PermissionGroup, PermissionStatus> _permission =
         await PermissionHandler().requestPermissions(
       [
