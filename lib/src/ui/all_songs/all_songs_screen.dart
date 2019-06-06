@@ -16,38 +16,6 @@ class AllSongsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final GlobalBloc _globalBloc = Provider.of<GlobalBloc>(context);
     return Scaffold(
-      appBar: AppBar(
-        bottom: PreferredSize(
-          preferredSize: Size.fromHeight(1),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Container(
-              height: 1,
-              color: Color(0xFFD9EAF1),
-            ),
-          ),
-        ),
-        title: Text(
-          "Device Music",
-          style: TextStyle(
-            color: Color(0xFF274D85),
-            fontWeight: FontWeight.bold,
-            fontSize: 22,
-          ),
-        ),
-        actions: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(right: 16.0),
-            child: Icon(
-              Icons.search,
-              size: 32,
-              color: Color(0xFF274D85),
-            ),
-          )
-        ],
-        elevation: 0.0,
-        backgroundColor: Colors.transparent,
-      ),
       body: StreamBuilder<List<Song>>(
         stream: _globalBloc.musicPlayerBloc.songs$,
         builder: (BuildContext context, AsyncSnapshot<List<Song>> snapshot) {

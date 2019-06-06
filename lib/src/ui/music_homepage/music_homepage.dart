@@ -15,17 +15,18 @@ class MusicHomepage extends StatefulWidget {
 }
 
 class _MusicHomepageState extends State<MusicHomepage> {
-  PanelController _controller;
+  PanelController _panelController;
 
   @override
   void initState() {
-    _controller = PanelController();
+    _panelController = PanelController();
+
     super.initState();
   }
 
   @override
   void dispose() {
-    _controller.close();
+    _panelController.close();
     super.dispose();
   }
 
@@ -34,8 +35,8 @@ class _MusicHomepageState extends State<MusicHomepage> {
     final double _radius = 25.0;
     return WillPopScope(
       onWillPop: () {
-        if (!_controller.isPanelClosed()) {
-          _controller.close();
+        if (!_panelController.isPanelClosed()) {
+          _panelController.close();
         } else {
           _showExitDialog();
         }
@@ -47,9 +48,9 @@ class _MusicHomepageState extends State<MusicHomepage> {
               topLeft: Radius.circular(_radius),
               topRight: Radius.circular(_radius),
             ),
-            child: NowPlayingScreen(controller: _controller),
+            child: NowPlayingScreen(controller: _panelController),
           ),
-          controller: _controller,
+          controller: _panelController,
           minHeight: 110,
           maxHeight: MediaQuery.of(context).size.height,
           borderRadius: BorderRadius.only(
@@ -77,9 +78,65 @@ class _MusicHomepageState extends State<MusicHomepage> {
                 ],
               ),
             ),
-            child: BottomPanel(controller: _controller),
+            child: BottomPanel(controller: _panelController),
           ),
-          body: AllSongsScreen(),
+          body: DefaultTabController(
+            length: 2,
+            child: Scaffold(
+              appBar: AppBar(
+                automaticallyImplyLeading: false,
+                title: Text(
+                  "Chillify",
+                  style: TextStyle(
+                    color: Color(0xFF274D85),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 24,
+                  ),
+                ),
+                bottom: TabBar(
+                  indicatorColor: Color(0xFFD9EAF1),
+                  labelColor: Color(0xFF274D85),
+                  unselectedLabelColor: Color(0xFF274D85).withOpacity(0.6),
+                  tabs: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 8.0),
+                      child: Text(
+                        "Songs",
+                        style: TextStyle(fontSize: 20.0),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 8.0),
+                      child: Text(
+                        "favorites",
+                        style: TextStyle(fontSize: 20.0),
+                      ),
+                    ),
+                  ],
+                ),
+                actions: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: Icon(
+                      Icons.search,
+                      color: Color(0xFF274D85),
+                      size: 35,
+                    ),
+                  )
+                ],
+                elevation: 0.0,
+                backgroundColor: Colors.transparent,
+              ),
+              body: TabBarView(
+                key: UniqueKey(),
+                physics: BouncingScrollPhysics(),
+                children: <Widget>[
+                  AllSongsScreen(),
+                  Container(),
+                ],
+              ),
+            ),
+          ),
         ),
       ),
     );
