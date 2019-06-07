@@ -21,6 +21,9 @@ UI heavily inspired by: https://dribbble.com/shots/6523216-Music-Player-Applicat
 
 
 ## TODO List
+
+᛫ Add foreground notification of "now playing" song with playback controls
+
 ᛫ Add SQLite database or alternatives
 
 ᛫ Add tabs => Albums, Artists and Playlists
