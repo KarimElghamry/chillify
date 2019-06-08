@@ -4,6 +4,8 @@ A Flutter music app made with Provider and BLoC pattern. (Works on Android for n
 
 UI heavily inspired by: https://dribbble.com/shots/6523216-Music-Player-Application/attachments
 
+current app version (apk): https://github.com/KarimElghamry/chillify/releases/tag/v1.0
+
 ## Current Features
 [✓] Retrieve all songs
 
