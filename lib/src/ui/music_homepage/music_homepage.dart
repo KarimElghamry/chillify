@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:music_app/src/blocs/global.dart';
+import 'package:music_app/src/ui/albums/albums_screen.dart';
 import 'package:music_app/src/ui/all_songs/all_songs_screen.dart';
 import 'package:music_app/src/ui/favorites/favorites_screen.dart';
 import 'package:music_app/src/ui/music_homepage/bottom_panel.dart';
@@ -82,7 +83,8 @@ class _MusicHomepageState extends State<MusicHomepage> {
             child: BottomPanel(controller: _panelController),
           ),
           body: DefaultTabController(
-            length: 2,
+            length: 3,
+            initialIndex: 0,
             child: Scaffold(
               appBar: AppBar(
                 automaticallyImplyLeading: false,
@@ -109,7 +111,14 @@ class _MusicHomepageState extends State<MusicHomepage> {
                     Padding(
                       padding: const EdgeInsets.only(bottom: 8.0),
                       child: Text(
-                        "favorites",
+                        "Albums",
+                        style: TextStyle(fontSize: 20.0),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 8.0),
+                      child: Text(
+                        "Favorites",
                         style: TextStyle(fontSize: 20.0),
                       ),
                     ),
@@ -133,6 +142,7 @@ class _MusicHomepageState extends State<MusicHomepage> {
                 physics: BouncingScrollPhysics(),
                 children: <Widget>[
                   AllSongsScreen(),
+                  AlbumsScreen(),
                   FavoritesScreen(),
                 ],
               ),
