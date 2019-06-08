@@ -42,4 +42,4 @@ UI heavily inspired by: https://dribbble.com/shots/6523216-Music-Player-Applicat
 # Screenshots
 
 
-<img src="/first_screen.png" width="250"> <img src="/second_screen.png" width="250"> <img src="/fourth_screen.png" width="250"><img src="/third_screen.png" width="250">
+<img src="/second_screen.png" width="250"> <img src="/fourth_screen.png" width="250">
