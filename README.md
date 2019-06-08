@@ -13,9 +13,15 @@ UI heavily inspired by: https://dribbble.com/shots/6523216-Music-Player-Applicat
 
 [✓] Seek
 
+[✓] Repeat
+
+[✓] Shuffle
+
 [✓] Now Playing
 
 [✓] add to favorites
+
+[✓] Albums
 
 [✓] Well-designed UI
 
@@ -26,7 +32,7 @@ UI heavily inspired by: https://dribbble.com/shots/6523216-Music-Player-Applicat
 
 ᛫ Add SQLite database or alternatives
 
-᛫ Add tabs => Albums, Artists and Playlists
+᛫ Add tabs => Artists and Playlists
 
 ᛫ Add search functionality
 
@@ -36,4 +42,4 @@ UI heavily inspired by: https://dribbble.com/shots/6523216-Music-Player-Applicat
 # Screenshots
 
 
-<img src="/first_screen.png" width="250"> <img src="/second_screen.png" width="250"> <img src="/third_screen.png" width="250">
+<img src="/first_screen.png" width="250"> <img src="/second_screen.png" width="250"> <img src="/fourth_screen.png" width="250"><img src="/third_screen.png" width="250">
