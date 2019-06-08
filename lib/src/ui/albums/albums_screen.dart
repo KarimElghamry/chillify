@@ -3,6 +3,7 @@ import 'package:music_app/src/blocs/global.dart';
 import 'package:music_app/src/common/empty_screen.dart';
 import 'package:music_app/src/models/album.dart';
 import 'package:music_app/src/ui/albums/album_tile.dart';
+import 'package:music_app/src/ui/albums/specific_album_screen.dart';
 import 'package:provider/provider.dart';
 
 class AlbumsScreen extends StatelessWidget {
@@ -38,8 +39,20 @@ class AlbumsScreen extends StatelessWidget {
             physics: BouncingScrollPhysics(),
             itemCount: _albums.length,
             itemBuilder: (BuildContext context, int index) {
-              return AlbumTile(
-                album: _albums[index],
+              return GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Provider<Album>.value(
+                              value: _albums[index],
+                              child: SpecificAlbumScreen(),
+                            ),
+                      ));
+                },
+                child: AlbumTile(
+                  album: _albums[index],
+                ),
               );
             },
           );
