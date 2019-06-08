@@ -41,6 +41,7 @@ class NowPlayingScreen extends StatelessWidget {
                       return EmptyAlbumArtContainer(
                         radius: _radius,
                         albumArtSize: _albumArtSize,
+                        iconSize: _albumArtSize / 2,
                       );
                     }
 
