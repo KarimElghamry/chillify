@@ -32,8 +32,8 @@ class AllSongsScreen extends StatelessWidget {
             );
           }
           return ListView.builder(
-            key: UniqueKey(),
-            padding: const EdgeInsets.only(bottom: 126.0),
+            key: PageStorageKey<String>("All Songs"),
+            padding: const EdgeInsets.only(bottom: 150.0),
             physics: BouncingScrollPhysics(),
             itemCount: _songs.length,
             itemExtent: 100,
