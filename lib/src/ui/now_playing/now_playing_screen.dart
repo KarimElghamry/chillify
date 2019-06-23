@@ -22,7 +22,7 @@ class NowPlayingScreen extends StatelessWidget {
     final GlobalBloc _globalBloc = Provider.of<GlobalBloc>(context);
     final double _radius = 25.0;
     final double _screenHeight = MediaQuery.of(context).size.height;
-    final double _albumArtSize = _screenHeight / 1.9;
+    final double _albumArtSize = _screenHeight / 2.1;
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
