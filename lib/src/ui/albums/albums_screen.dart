@@ -28,9 +28,9 @@ class AlbumsScreen extends StatelessWidget {
           }
 
           return GridView.builder(
-            key: UniqueKey(),
+            key: PageStorageKey<String>("Albums Screen"),
             padding: EdgeInsets.only(
-                left: 16.0, right: 16.0, top: 16.0, bottom: 126.0),
+                left: 16.0, right: 16.0, top: 16.0, bottom: 150),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
               mainAxisSpacing: 8.0,

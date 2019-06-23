@@ -8,6 +8,7 @@ import 'package:music_app/src/ui/all_songs/all_songs_screen.dart';
 import 'package:music_app/src/ui/favorites/favorites_screen.dart';
 import 'package:music_app/src/ui/music_homepage/bottom_panel.dart';
 import 'package:music_app/src/ui/now_playing/now_playing_screen.dart';
+import 'package:music_app/src/ui/search/search_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
@@ -127,10 +128,20 @@ class _MusicHomepageState extends State<MusicHomepage> {
                 actions: <Widget>[
                   Padding(
                     padding: const EdgeInsets.only(right: 8.0),
-                    child: Icon(
-                      Icons.search,
-                      color: Color(0xFF274D85),
-                      size: 35,
+                    child: IconButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SearchScreen(),
+                          ),
+                        );
+                      },
+                      icon: Icon(
+                        Icons.search,
+                        color: Color(0xFF274D85),
+                        size: 35,
+                      ),
                     ),
                   )
                 ],
