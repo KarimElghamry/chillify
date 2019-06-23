@@ -71,7 +71,6 @@ class _SearchScreenState extends State<SearchScreen> {
                 ),
                 autofocus: true,
                 onChanged: (String value) {
-                  _textEditingController.text = value;
                   _searchScreenBloc.updateFilteredSongs(value, _songs);
                 },
               );
@@ -91,18 +90,19 @@ class _SearchScreenState extends State<SearchScreen> {
             if (_filteredSongs.length == 0) {
               return Center(
                 child: Text(
-                  "Start typing to search for a song.",
+                  "Enter proper keywords to start searching",
                   style: TextStyle(
                     fontSize: 22.0,
                     color: Color(0xFF274D85),
                   ),
+                  textAlign: TextAlign.center,
                 ),
               );
             }
 
-            ListView.builder(
-              key: PageStorageKey<String>("All Songs"),
-              padding: const EdgeInsets.only(bottom: 150.0),
+            return ListView.builder(
+              key: UniqueKey(),
+              padding: const EdgeInsets.only(bottom: 30.0),
               physics: BouncingScrollPhysics(),
               itemCount: _filteredSongs.length,
               itemExtent: 100,
