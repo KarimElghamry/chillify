@@ -23,6 +23,8 @@ current app version (apk): https://github.com/KarimElghamry/chillify/releases/ta
 
 [✓] add to favorites
 
+[✓] Search songs
+
 [✓] Albums
 
 [✓] Well-designed UI
@@ -35,8 +37,6 @@ current app version (apk): https://github.com/KarimElghamry/chillify/releases/ta
 ᛫ Add SQLite database or alternatives
 
 ᛫ Add tabs => Artists and Playlists
-
-᛫ Add search functionality
 
 ᛫ Implement beautiful animations
 
