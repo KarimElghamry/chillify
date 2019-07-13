@@ -1,4 +1,5 @@
 import 'package:flute_music_player/flute_music_player.dart';
+import 'package:music_app/src/models/album.dart';
 import 'package:music_app/src/models/playback.dart';
 import 'package:music_app/src/models/playerstate.dart';
 import 'package:rxdart/rxdart.dart';
@@ -7,6 +8,7 @@ import 'dart:convert';
 
 class MusicPlayerBloc {
   BehaviorSubject<List<Song>> _songs$;
+  BehaviorSubject<List<Album>> _albums$;
   BehaviorSubject<MapEntry<PlayerState, Song>> _playerState$;
   BehaviorSubject<MapEntry<List<Song>, List<Song>>>
       _playlist$; //key is normal, value is shuffle
@@ -18,6 +20,7 @@ class MusicPlayerBloc {
   Song _defaultSong;
 
   BehaviorSubject<List<Song>> get songs$ => _songs$;
+  BehaviorSubject<List<Album>> get albums$ => _albums$;
   BehaviorSubject<MapEntry<PlayerState, Song>> get playerState$ =>
       _playerState$;
   BehaviorSubject<Duration> get position$ => _position$;
@@ -25,17 +28,9 @@ class MusicPlayerBloc {
   BehaviorSubject<List<Song>> get favorites$ => _favorites$;
 
   MusicPlayerBloc() {
-    _defaultSong = Song(
-      null,
-      " ",
-      " ",
-      " ",
-      null,
-      null,
-      null,
-      null,
-    );
+    _initDeafultSong();
     _initStreams();
+    _initObservers();
     _initAudioPlayer();
   }
 
@@ -73,6 +68,17 @@ class MusicPlayerBloc {
     List<Song> _shufflePlaylist = []..addAll(normalPlaylist);
     _shufflePlaylist.shuffle();
     _playlist$.add(MapEntry(normalPlaylist, _shufflePlaylist));
+  }
+
+  void _updateAlbums(List<Song> songs) {
+    Map<int, Album> _albumsMap = {};
+    for (Song song in songs) {
+      if (_albumsMap[song.albumId] == null) {
+        _albumsMap[song.albumId] = Album.fromSong(song);
+      }
+    }
+    final List<Album> _albums = _albumsMap.values.toList();
+    _albums$.add(_albums);
   }
 
   void playNextSong() {
@@ -165,23 +171,6 @@ class MusicPlayerBloc {
     _playback$.add(_value);
   }
 
-  void _initAudioPlayer() {
-    _audioPlayer = MusicFinder();
-    _audioPlayer.setPositionHandler(
-      (Duration duration) {
-        final bool _isAudioSeeking = _isAudioSeeking$.value;
-        if (!_isAudioSeeking) {
-          updatePosition(duration);
-        }
-      },
-    );
-    _audioPlayer.setCompletionHandler(
-      () {
-        _onSongComplete();
-      },
-    );
-  }
-
   Future<void> saveFavorites() async {
     SharedPreferences _prefs = await SharedPreferences.getInstance();
     final List<Song> _favorites = _favorites$.value;
@@ -233,9 +222,31 @@ class MusicPlayerBloc {
     return _map;
   }
 
+  void _initDeafultSong() {
+    _defaultSong = Song(
+      null,
+      " ",
+      " ",
+      " ",
+      null,
+      null,
+      null,
+      null,
+    );
+  }
+
+  void _initObservers() {
+    _songs$.listen(
+      (List<Song> songs) {
+        _updateAlbums(songs);
+      },
+    ); // push albums from songs
+  }
+
   void _initStreams() {
     _isAudioSeeking$ = BehaviorSubject<bool>.seeded(false);
     _songs$ = BehaviorSubject<List<Song>>();
+    _albums$ = BehaviorSubject<List<Album>>();
     _position$ = BehaviorSubject<Duration>();
     _playlist$ = BehaviorSubject<MapEntry<List<Song>, List<Song>>>();
     _playback$ = BehaviorSubject<List<Playback>>.seeded([]);
@@ -248,10 +259,28 @@ class MusicPlayerBloc {
     );
   }
 
+  void _initAudioPlayer() {
+    _audioPlayer = MusicFinder();
+    _audioPlayer.setPositionHandler(
+      (Duration duration) {
+        final bool _isAudioSeeking = _isAudioSeeking$.value;
+        if (!_isAudioSeeking) {
+          updatePosition(duration);
+        }
+      },
+    );
+    _audioPlayer.setCompletionHandler(
+      () {
+        _onSongComplete();
+      },
+    );
+  }
+
   void dispose() {
     stopMusic();
     _isAudioSeeking$.close();
     _songs$.close();
+    _albums$.close();
     _playerState$.close();
     _playlist$.close();
     _position$.close();

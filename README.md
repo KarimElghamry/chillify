@@ -1,8 +1,14 @@
+<a href="https://github.com/Solido/awesome-flutter">
+   <img alt="Awesome Flutter" src="https://img.shields.io/badge/Awesome-Flutter-blue.svg?longCache=true&style=flat-square" />
+</a>
+
 # Chillify
 
 A Flutter music app made with Provider and BLoC pattern. (Works on Android for now, iOS coming soon)
 
 UI heavily inspired by: https://dribbble.com/shots/6523216-Music-Player-Application/attachments
+
+current app version (apk): https://github.com/KarimElghamry/chillify/releases/tag/v1.0
 
 ## Current Features
 [✓] Retrieve all songs
@@ -13,9 +19,17 @@ UI heavily inspired by: https://dribbble.com/shots/6523216-Music-Player-Applicat
 
 [✓] Seek
 
+[✓] Repeat
+
+[✓] Shuffle
+
 [✓] Now Playing
 
 [✓] add to favorites
+
+[✓] Search songs
+
+[✓] Albums
 
 [✓] Well-designed UI
 
@@ -26,9 +40,7 @@ UI heavily inspired by: https://dribbble.com/shots/6523216-Music-Player-Applicat
 
 ᛫ Add SQLite database or alternatives
 
-᛫ Add tabs => Albums, Artists and Playlists
-
-᛫ Add search functionality
+᛫ Add tabs => Artists and Playlists
 
 ᛫ Implement beautiful animations
 
@@ -36,4 +48,4 @@ UI heavily inspired by: https://dribbble.com/shots/6523216-Music-Player-Applicat
 # Screenshots
 
 
-<img src="/first_screen.png" width="250"> <img src="/second_screen.png" width="250"> <img src="/third_screen.png" width="250">
+<img src="/first_screen.png" width="250"> <img src="/second_screen.png" width="250"> <img src="/fourth_screen.png" width="250"> <img src="/third_screen.png" width="250"> 

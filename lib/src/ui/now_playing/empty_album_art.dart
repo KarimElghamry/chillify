@@ -5,12 +5,15 @@ class EmptyAlbumArtContainer extends StatelessWidget {
     Key key,
     @required double radius,
     @required double albumArtSize,
+    @required double iconSize,
   })  : _radius = radius,
         _albumArtSize = albumArtSize,
+        _iconSize = iconSize,
         super(key: key);
 
   final double _radius;
   final double _albumArtSize;
+  final double _iconSize;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +28,7 @@ class EmptyAlbumArtContainer extends StatelessWidget {
             child: Center(
               child: Icon(
                 Icons.music_note,
-                size: 175,
+                size: _iconSize,
                 color: Colors.black,
               ),
             ),

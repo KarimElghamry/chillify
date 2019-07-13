@@ -26,8 +26,8 @@ class FavoritesScreen extends StatelessWidget {
             );
           }
           return ListView.builder(
-            key: UniqueKey(),
-            padding: const EdgeInsets.only(bottom: 110.0),
+            key: PageStorageKey<String>("Favorites"),
+            padding: const EdgeInsets.only(bottom: 150.0),
             physics: BouncingScrollPhysics(),
             itemCount: _songs.length,
             itemExtent: 100,
