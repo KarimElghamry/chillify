@@ -1,3 +1,7 @@
+<a href="https://github.com/Solido/awesome-flutter">
+   <img alt="Awesome Flutter" src="https://img.shields.io/badge/Awesome-Flutter-blue.svg?longCache=true&style=flat-square" />
+</a>
+
 # Chillify
 
 A Flutter music app made with Provider and BLoC pattern. (Works on Android for now, iOS coming soon)
