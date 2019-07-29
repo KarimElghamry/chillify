@@ -43,6 +43,7 @@ class _MusicHomepageState extends State<MusicHomepage> {
         } else {
           _showExitDialog();
         }
+        return Future<bool>.value(false);
       },
       child: Scaffold(
         body: SlidingUpPanel(
