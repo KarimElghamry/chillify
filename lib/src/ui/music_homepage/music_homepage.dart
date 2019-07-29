@@ -55,7 +55,7 @@ class _MusicHomepageState extends State<MusicHomepage> {
             child: NowPlayingScreen(controller: _panelController),
           ),
           controller: _panelController,
-          minHeight: 110,
+          minHeight: 115,
           maxHeight: MediaQuery.of(context).size.height,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(_radius),
