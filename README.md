@@ -6,6 +6,8 @@
 
 A Flutter music app made with Provider and BLoC pattern. (Works on Android for now, iOS coming soon)
 
+Recommended Flutter version: <b>1.7.8+hotfix.3</b>
+
 UI heavily inspired by: https://dribbble.com/shots/6523216-Music-Player-Application/attachments
 
 current app version (apk): https://github.com/KarimElghamry/chillify/releases/tag/v1.0
@@ -51,7 +53,3 @@ current app version (apk): https://github.com/KarimElghamry/chillify/releases/ta
 <img src="/first_screen.png" width="250"> <img src="/second_screen.png" width="250"> <img src="/fourth_screen.png" width="250"> <img src="/third_screen.png" width="250"> 
 
 
-
-## Common Issues
-
-᛫ If you build the application using Flutter version higher than 1.5, `Paddings` may get a little messed up as well as the range `Slider` may look out of position.
