@@ -105,7 +105,7 @@ class _SearchScreenState extends State<SearchScreen> {
               padding: const EdgeInsets.only(bottom: 30.0),
               physics: BouncingScrollPhysics(),
               itemCount: _filteredSongs.length,
-              itemExtent: 100,
+              itemExtent: 110,
               itemBuilder: (BuildContext context, int index) {
                 return StreamBuilder<MapEntry<PlayerState, Song>>(
                   stream: _globalBloc.musicPlayerBloc.playerState$,

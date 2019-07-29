@@ -45,9 +45,9 @@ class AlbumsScreen extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) => Provider<Album>.value(
-                              value: _albums[index],
-                              child: SpecificAlbumScreen(),
-                            ),
+                          value: _albums[index],
+                          child: SpecificAlbumScreen(),
+                        ),
                       ));
                 },
                 child: AlbumTile(

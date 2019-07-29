@@ -27,6 +27,11 @@ class ChillifyApp extends StatelessWidget {
       dispose: (BuildContext context, GlobalBloc value) => value.dispose(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          sliderTheme: SliderThemeData(
+            trackHeight: 1,
+          ),
+        ),
         home: SafeArea(
           child: StreamBuilder<PermissionStatus>(
             stream: _globalBloc.permissionsBloc.storagePermissionStatus$,

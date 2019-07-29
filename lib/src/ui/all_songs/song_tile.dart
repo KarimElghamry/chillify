@@ -31,7 +31,7 @@ class SongTile extends StatelessWidget {
           final bool _isSelectedSong = _song == _currentSong;
           return AnimatedContainer(
             duration: Duration(milliseconds: 250),
-            height: 100,
+            height: 110,
             width: double.infinity,
             decoration: BoxDecoration(
               gradient: _isSelectedSong
@@ -138,13 +138,13 @@ class SongTile extends StatelessWidget {
                       ? Row(
                           children: <Widget>[
                             Flexible(
-                              flex: 3,
+                              flex: 2,
                               child: Container(
                                 width: double.infinity,
                               ),
                             ),
                             Flexible(
-                              flex: 18,
+                              flex: 14,
                               child: StreamBuilder<Duration>(
                                 stream: _globalBloc.musicPlayerBloc.position$,
                                 builder: (BuildContext context,
