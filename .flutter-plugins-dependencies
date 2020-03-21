@@ -1,1 +1,2 @@
+//1.7.8+hotfix.4
 {"_info":"// This is a generated file; do not edit or check into version control.","dependencyGraph":[{"name":"flute_music_player","dependencies":[]},{"name":"permission_handler","dependencies":[]},{"name":"shared_preferences","dependencies":[]}]}
