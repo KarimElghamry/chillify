@@ -4,9 +4,9 @@
 
 # Chillify
 
-A Flutter music app made with Provider and BLoC pattern. (Works on Android for now, iOS coming soon)
+A Flutter music app made with Provider and BLoC pattern. (Works on Android for now)
 
-Recommended Flutter version: <b>1.7.8+hotfix.3</b>
+Recommended Flutter version: <b>1.12.13+hotfix.8</b>
 
 UI heavily inspired by: https://dribbble.com/shots/6523216-Music-Player-Application/attachments
 
