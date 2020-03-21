@@ -36,7 +36,7 @@ class AllSongsScreen extends StatelessWidget {
             padding: const EdgeInsets.only(bottom: 150.0),
             physics: BouncingScrollPhysics(),
             itemCount: _songs.length,
-            itemExtent: 100,
+            itemExtent: 110,
             itemBuilder: (BuildContext context, int index) {
               return StreamBuilder<MapEntry<PlayerState, Song>>(
                 stream: _globalBloc.musicPlayerBloc.playerState$,

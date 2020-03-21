@@ -129,7 +129,7 @@ class BottomPanel extends StatelessWidget {
                       ),
                     ),
                     Flexible(
-                      flex: 10,
+                      flex: 12,
                       child: StreamBuilder<Duration>(
                           stream: _globalBloc.musicPlayerBloc.position$,
                           builder: (BuildContext context,
