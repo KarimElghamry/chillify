@@ -53,3 +53,8 @@ current app version (apk): https://github.com/KarimElghamry/chillify/releases/ta
 <img src="/first_screen.png" width="250"> <img src="/second_screen.png" width="250"> <img src="/fourth_screen.png" width="250"> <img src="/third_screen.png" width="250"> 
 
 
+## Support
+
+Consider supporting me if this project was useful to you! Thank you!
+
+<a href="https://www.buymeacoffee.com/karimelghamry" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
